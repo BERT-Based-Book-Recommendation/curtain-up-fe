@@ -24,11 +24,12 @@ const HeaderContainer = styled.header`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0px 25px;
+  padding: 0px 40px;
 `;
 const WrapLogo = styled.div`
   display: flex;
   align-items: center;
+
   img {
     width: 70px;
   }
@@ -39,7 +40,9 @@ const WrapLogo = styled.div`
 
 const WrapMenus = styled.div`
   display: flex;
-  gap: 20px;
+  gap: 35px;
   padding-top: 10px;
   flex-wrap: wrap;
+
+  font-size: 1.3rem;
 `;
