@@ -8,7 +8,11 @@ const Footer = () => {
         <div>
           <p>리북 : Recommend Book, Read Book</p>
           <div className="github">
-            <img className="github-icon" src="/assets/github-icon.svg" />
+            <img
+              className="github-icon"
+              src="/assets/github-icon.svg"
+              alt="github"
+            />
             <p>프로젝트 깃허브 링크 바로가기</p>
           </div>
         </div>

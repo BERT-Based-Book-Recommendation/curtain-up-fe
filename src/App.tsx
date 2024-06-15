@@ -1,5 +1,4 @@
 import React from "react";
-import styled from "styled-components";
 import Header from "./components/Header";
 import IntroductionIndexPage from "./pages/IntroductionIndexPage";
 import BookRecommendIndexPage from "./pages/BookRecommendIndexPage";
