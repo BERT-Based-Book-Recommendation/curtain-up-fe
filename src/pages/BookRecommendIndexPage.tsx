@@ -1,9 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import TextBox from "../components/TextBox";
 import TextInput from "../components/TextInput";
 
 const BookRecommendIndexPage = () => {
+  const [isShown, setIsShown] = useState(false);
+
+  const handleOnChange = (e: any) => {
+    // console.log(e.target.value);
+  };
+
   return (
     <BookRecommend>
       <ImageContainer>
@@ -13,8 +19,11 @@ const BookRecommendIndexPage = () => {
         <strong>어떤 도서</strong>를 읽고 싶으신가요?
       </Title>
       <TextContainer>
-        <TextBox />
-        <TextInput />
+        <TextBox visible={isShown} />
+        <TextInput
+          onChange={handleOnChange}
+          setIsShown={() => setIsShown(true)}
+        />
       </TextContainer>
     </BookRecommend>
   );

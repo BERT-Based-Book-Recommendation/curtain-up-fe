@@ -1,14 +1,17 @@
 import React from "react";
 import styled from "styled-components";
 
-const TextBox = () => {
+interface TextBoxProps {
+  visible: boolean;
+}
+const TextBox = ({ visible }: TextBoxProps) => {
   return (
-    <TextContainer>
+    <TextContainer $visible={visible}>
       <MessageByMe>
         <div className="message-container">
           <div className="tail"></div>
           <div className="message">
-            <div>귀여운 동물이 나오면서 주인공과 모험하는 소설을 읽고싶어.</div>
+            <div>감동적인 소설을 추천해줘.</div>
           </div>
         </div>
       </MessageByMe>
@@ -18,13 +21,12 @@ const TextBox = () => {
           <div className="message-container">
             <div className="tail"></div>
             <div className="message">
-              『이상한 나라의 앨리스』는 7살 소녀 앨리스가 토끼 굴을 타고 떨어져
-              도착한 이상한 나라에서 겪는 모험을 그리고 있죠. 앨리스는 이상한
-              나라에서 토끼, 모자장수, 체셔 고양이 등 다양한 기발한 캐릭터들을
-              만나게 됩니다. 이들과의 만남을 통해 앨리스는 성장하고 자신의
-              정체성을 찾아가는 과정을 보여줍니다. 『이상한 나라의 앨리스』는
-              지금까지도 많은 사랑을 받고 있는 고전 명작 중 하나입니다. 귀여운
-              동물 캐릭터와 함께 펼쳐지는 앨리스의 모험을 만나보세요!
+              감동적인 소설을 찾고 있다면, 빛의 소설가 백수린의 첫 소설집 『폴링
+              인 폴』을 추천합니다. 이번 개정판은 백수린 작가가 처음으로 두 손
+              가득 귀중히 떠서 건넸던 새하얀 마음을 담아, 그녀의 섬세하고 찬란한
+              소설 세계를 다시 만나볼 수 있는 특별한 기회입니다. 『폴링 인
+              폴』은 작가의 깨끗하고 순정했던 마음이 고스란히 담긴 작품으로, 그
+              동안의 여정을 되돌아볼 수 있는 소중한 선물이 될 것입니다.
             </div>
             <div className="wrapper"></div>
           </div>
@@ -34,7 +36,13 @@ const TextBox = () => {
   );
 };
 
-const TextContainer = styled.div`
+const TextContainer = styled.div<{ $visible: boolean }>`
+  ${({ $visible }) =>
+    $visible
+      ? `
+      visibility: visible
+          `
+      : `visibility: hidden`};
   height: 400px;
 `;
 

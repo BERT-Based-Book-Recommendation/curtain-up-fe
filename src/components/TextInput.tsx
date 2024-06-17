@@ -1,14 +1,21 @@
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import styled from "styled-components";
 
-const TextInput = () => {
+//name 적용 필요 : RegisterProfileCareerAddPage
+interface InputProps {
+  onChange: (e: any) => void;
+  setIsShown: () => void;
+}
+
+const TextInput = ({ onChange, setIsShown }: InputProps) => {
   return (
     <InputContainer>
       <input
+        onChange={onChange}
         type="text"
         placeholder="추천 받고 싶은 도서의 내용을 입력하세요."
       />
-      <img src="/assets/send-icon.png" alt="send-button" />
+      <img onClick={setIsShown} src="/assets/send-icon.png" alt="send-button" />
     </InputContainer>
   );
 };
