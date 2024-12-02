@@ -5,14 +5,15 @@ const Header: React.FC = () => {
   return (
     <HeaderContainer>
       <WrapLogo>
-        <img src="/assets/logo.svg" alt="로고" />
-        <h1>리북</h1>
+        <h1>LOGO</h1>
+        {/* <img src="/assets/logo.svg" alt="로고" /> */}
+        {/* <h1>뮤지컬추천</h1> */}
       </WrapLogo>
       <WrapMenus>
-        <div>서비스 소개</div>
-        <div>도서 추천</div>
-        <div>도서 추천 리스트</div>
-        <div>서비스 문의</div>
+        <div>Home</div>
+        <div>About</div>
+        <div>Work</div>
+        <div>Contact</div>
       </WrapMenus>
     </HeaderContainer>
   );
@@ -25,6 +26,12 @@ const HeaderContainer = styled.header`
   align-items: center;
   justify-content: space-between;
   padding: 0px 40px;
+  color: white;
+
+  position: sticky;
+  top: 0;
+
+  z-index: 99;
 `;
 const WrapLogo = styled.div`
   display: flex;

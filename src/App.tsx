@@ -5,16 +5,14 @@ import BookRecommendIndexPage from "./pages/BookRecommendIndexPage";
 import RecommendListIndexPage from "./pages/RecommendListIndexPage";
 import ContactServiceIndexPage from "./pages/ContactServiceIndexPage";
 import Footer from "./components/Footer";
+import LandingPage from "./pages/LandingPage";
+import RecommendPage from "./pages/RecommendPage";
 
 function App() {
   return (
     <>
-      <Header />
-      <IntroductionIndexPage />
-      <BookRecommendIndexPage />
-      <RecommendListIndexPage />
-      <ContactServiceIndexPage />
-      <Footer />
+      <LandingPage />
+      <RecommendPage />
     </>
   );
 }

@@ -6,7 +6,8 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  background-color: #fffbf6;
+  overflow-x: hidden; /* 가로 스크롤 제거 */
+  background-color: #4b0e9f;
 }
 
 code {
