@@ -1,30 +1,29 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import styled from "styled-components";
 
 const RecommendPage = () => {
   const text = "어떤 뮤지컬을 보고 싶나요?"; // 타이핑할 문구
-  let index = 0;
-  let speed = 200; // 글자 타이핑 속도 (밀리초 단위)
-
-  function typeWriter() {
-    const textElement = window.document.getElementById("text");
-
-    if (textElement && index < text.length) {
-      textElement.textContent += text.charAt(index); // 한 글자씩 추가
-      index++;
-      setTimeout(typeWriter, speed);
-    } else if (textElement) {
-      setTimeout(() => {
-        textElement.textContent = "";
-        index = 0;
-        typeWriter(); // 반복 호출
-      }, 5000);
-    }
-  }
+  const indexRef = useRef(0); // index를 useRef로 관리
+  const speed = 200; // 글자 타이핑 속도 (밀리초 단위)
 
   useEffect(() => {
+    function typeWriter() {
+      const textElement = window.document.getElementById("text");
+
+      if (textElement && indexRef.current < text.length) {
+        textElement.textContent += text.charAt(indexRef.current); // 한 글자씩 추가
+        indexRef.current++; // useRef를 통해 index 값 관리
+        setTimeout(typeWriter, speed);
+      } else if (textElement) {
+        setTimeout(() => {
+          textElement.textContent = ""; // 텍스트 초기화
+          indexRef.current = 0; // index 초기화
+          typeWriter(); // 반복 호출
+        }, 5000); // 반복 간격
+      }
+    }
     typeWriter();
-  }, [typeWriter]);
+  }, [text, speed]); // 의존성 배열에 text와 speed 추가
 
   return (
     <WrapContent>
