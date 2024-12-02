@@ -5,7 +5,7 @@ const Header: React.FC = () => {
   return (
     <HeaderContainer>
       <WrapLogo>
-        <h1>LOGO</h1>
+        <h1>CURTAIN UP</h1>
         {/* <img src="/assets/logo.svg" alt="로고" /> */}
         {/* <h1>뮤지컬추천</h1> */}
       </WrapLogo>
@@ -41,6 +41,8 @@ const WrapLogo = styled.div`
     width: 70px;
   }
   h1 {
+    font-family: Nanum_SonGeurSsi;
+    font-size: 2rem;
     padding: 10px 0 0 1rem;
   }
 `;

@@ -1,10 +1,40 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
+import axios from "axios";
+import BeatLoader from "react-spinners/BeatLoader";
+import { motion } from "framer-motion";
+
+interface resultProp {
+  name: string;
+  pre_intro: string;
+  similarity: number;
+}
 
 const RecommendPage = () => {
   const text = "어떤 뮤지컬을 보고 싶나요?"; // 타이핑할 문구
   const indexRef = useRef(0); // index를 useRef로 관리
   const speed = 200; // 글자 타이핑 속도 (밀리초 단위)
+
+  const [inputValue, setInputValue] = useState("");
+  const [resultList, setResultList] = useState<resultProp[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.target.value);
+  };
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
+
+    axios
+      .post("http://127.0.0.1:8000/model", {
+        inputText: inputValue,
+      })
+      .then((response) => {
+        setResultList(response.data.recommended_books);
+        setIsLoading(false);
+      });
+  };
 
   useEffect(() => {
     function typeWriter() {
@@ -26,29 +56,170 @@ const RecommendPage = () => {
   }, [text, speed]); // 의존성 배열에 text와 speed 추가
 
   return (
-    <WrapContent>
-      <WrapBackground>
-        <img className="bg" src="/assets/recommend/background.png" alt="배경" />
-        <img className="star-1" src="/assets/landing/bg-twinkle.png" alt="별" />
-        <img className="star-2" src="/assets/landing/bg-twinkle.png" alt="별" />
-        <img className="girl" src="/assets/recommend/girl.png" alt="소녀" />
-      </WrapBackground>
-      <Content>
-        <div>
-          <span id="text" />
-          <span id="cursor" />
-        </div>
-        <div>
-          <input placeholder="웅장한 역사 스토리를 담은 뮤지컬을 추천해줘"></input>
-          <button>
-            <img src="/assets/recommend/theater-masks.png" alt="아이콘" />
-            추천받기
-          </button>
-        </div>
-      </Content>
-    </WrapContent>
+    <>
+      {resultList.length !== 0 && (
+        <WrapResult>
+          <WrapButton>
+            <button onClick={() => setResultList([])}>
+              <img src="/assets/recommend/arrow.png" alt="뒤로" />
+              다시하기
+            </button>
+          </WrapButton>
+          {resultList.map((result) => (
+            <MotionDiv
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{
+                stiffness: 260,
+                damping: 20,
+              }}
+            >
+              <Section key={result.name}>
+                <img src="/assets/recommend/뮤지컬레드북.jpeg" alt="포스터" />
+                <div>
+                  <span className="title">{result.name}</span>
+                  <span className="introduction">{result.pre_intro}</span>
+                </div>
+              </Section>
+            </MotionDiv>
+          ))}
+        </WrapResult>
+      )}
+      <WrapContent>
+        <WrapBackground>
+          <img
+            className="bg"
+            src="/assets/recommend/background.png"
+            alt="배경"
+          />
+          <img
+            className="star-1"
+            src="/assets/landing/bg-twinkle.png"
+            alt="별"
+          />
+          <img
+            className="star-2"
+            src="/assets/landing/bg-twinkle.png"
+            alt="별"
+          />
+          <img className="girl" src="/assets/recommend/girl.png" alt="소녀" />
+        </WrapBackground>
+        <Content>
+          <div>
+            <span id="text" />
+            <span id="cursor" />
+          </div>
+          <form onSubmit={handleSubmit}>
+            <input
+              value={inputValue}
+              placeholder="웅장한 역사 스토리를 담은 뮤지컬을 추천해줘"
+              onChange={handleChange}
+            />
+            <button type="submit">
+              {isLoading ? (
+                <BeatLoader color="white" size="10" />
+              ) : (
+                <>
+                  <img src="/assets/recommend/theater-masks.png" alt="아이콘" />
+                  추천받기
+                </>
+              )}
+            </button>
+          </form>
+        </Content>
+      </WrapContent>
+    </>
   );
 };
+
+const WrapResult = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 100%; /* WrapResult의 높이를 100%로 설정 */
+  z-index: 99999;
+
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+  gap: 2rem;
+
+  overflow-y: auto;
+`;
+
+const WrapButton = styled.div`
+  display: flex;
+  justify-content: end;
+  width: 76%;
+
+  button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    margin-top: 7rem;
+
+    padding: 0.6rem 0.8rem;
+    background-color: #9544cf;
+    border-radius: 0.9rem;
+    border: none;
+    color: white;
+    font-weight: 600;
+  }
+
+  img {
+    width: 1.3rem;
+    padding-right: 0.3rem;
+  }
+`;
+
+const MotionDiv = styled(motion.div)`
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  gap: 1rem;
+
+  &:last-child {
+    margin-bottom: 4rem;
+  }
+`;
+
+const Section = styled.div`
+  width: 70%;
+  min-height: 50%;
+  max-height: 50vh;
+  overflow-y: auto;
+
+  background-color: #d4ccdf;
+  border-radius: 1rem;
+  padding: 2rem;
+
+  display: flex;
+  gap: 2rem;
+
+  div {
+    display: flex;
+    flex-direction: column;
+  }
+
+  img {
+    width: 16rem;
+    height: 23rem;
+    object-fit: cover;
+  }
+
+  .title {
+    font-size: 1.5rem;
+    color: #330a6a;
+    font-weight: 700;
+  }
+
+  .introduction {
+    font-size: 1rem;
+    margin-top: 1rem;
+    color: #330a6a;
+  }
+`;
 
 const WrapContent = styled.div`
   width: 100%;
@@ -128,7 +299,8 @@ const Content = styled.div`
   justify-content: center;
   gap: 2rem;
 
-  div {
+  div,
+  form {
     display: flex;
     flex-direction: row;
     align-items: center;

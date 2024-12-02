@@ -22,3 +22,11 @@ code {
     url("./fonts/NanumHaNaSonGeurSsi.ttf") format("truetype");
   font-display: swap; /* 폰트 로딩 시 fallback 폰트 먼저 표시 */
 }
+
+@font-face {
+  font-family: "Pacifico_Regular";
+  font-style: normal;
+  src: local("PacificoRegular"),
+    url("./fonts/Pacifico-Regular.ttf") format("truetype");
+  font-display: swap; /* 폰트 로딩 시 fallback 폰트 먼저 표시 */
+}
