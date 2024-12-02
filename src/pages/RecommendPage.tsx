@@ -52,8 +52,9 @@ const RecommendPage = () => {
         }, 5000); // 반복 간격
       }
     }
-    typeWriter();
-  }, [text, speed]); // 의존성 배열에 text와 speed 추가
+
+    if (resultList.length === 0) typeWriter();
+  }, [text, speed, resultList]); // 의존성 배열에 text와 speed 추가
 
   return (
     <>
