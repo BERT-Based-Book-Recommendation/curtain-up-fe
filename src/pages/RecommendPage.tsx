@@ -3,11 +3,19 @@ import styled from "styled-components";
 import axios from "axios";
 import BeatLoader from "react-spinners/BeatLoader";
 import { motion } from "framer-motion";
+import Review from "../components/Review";
+
+interface ReviewProp {
+  rv_title: string;
+  writer: string;
+}
 
 interface resultProp {
   name: string;
+  image: string;
   pre_intro: string;
   similarity: number;
+  review: ReviewProp[];
 }
 
 const RecommendPage = () => {
@@ -25,6 +33,7 @@ const RecommendPage = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
+    setInputValue("");
 
     axios
       .post("http://127.0.0.1:8000/model", {
@@ -76,10 +85,15 @@ const RecommendPage = () => {
               }}
             >
               <Section key={result.name}>
-                <img src="/assets/recommend/뮤지컬레드북.jpeg" alt="포스터" />
+                <img src={result.image} alt="포스터" />
                 <div>
                   <span className="title">{result.name}</span>
                   <span className="introduction">{result.pre_intro}</span>
+                  <WrapReview>
+                    {result.review.map((review) => (
+                      <Review review={review} />
+                    ))}
+                  </WrapReview>
                 </div>
               </Section>
             </MotionDiv>
@@ -118,7 +132,7 @@ const RecommendPage = () => {
             />
             <button type="submit">
               {isLoading ? (
-                <BeatLoader color="white" size="10" />
+                <BeatLoader color="white" size="10px" />
               ) : (
                 <>
                   <img src="/assets/recommend/theater-masks.png" alt="아이콘" />
@@ -210,7 +224,7 @@ const Section = styled.div`
   }
 
   .title {
-    font-size: 1.5rem;
+    font-size: 2rem;
     color: #330a6a;
     font-weight: 700;
   }
@@ -220,6 +234,17 @@ const Section = styled.div`
     margin-top: 1rem;
     color: #330a6a;
   }
+`;
+
+const WrapReview = styled.div`
+  height: 55%;
+  overflow-y: auto;
+
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  margin: 1rem 0;
 `;
 
 const WrapContent = styled.div`
