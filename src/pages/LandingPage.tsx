@@ -64,9 +64,12 @@ const LandingPage = () => {
           $isContain={false}
         />
         <Background
+          className="bg-4"
           src="/assets/landing/bg-4.png"
           $top={"65"}
+          $left={"-10"}
           $scale={1 + scrollValue * 0.001}
+          $isContain={false}
         />
       </WrapScrollContent>
     </WrapPage>
@@ -120,7 +123,12 @@ const WrapStar = styled.div<{ $scrollValue: number }>`
   > .twinkle {
     animation: ${twinkleAnimation} 1.5s infinite;
   }
+
+  @media (max-width: 650px) {
+    width: 200%;
+  }
 `;
+
 const BackgroundStar = styled.div<{ src: string }>`
   width: 100%;
   max-width: 1500px;
@@ -173,6 +181,12 @@ const BackgroundMoon = styled.div<{ $scrollValue: number }>`
   top: 0;
   left: 50%;
   transform: translate(-50%, -50%);
+
+  @media (max-width: 650px) {
+    width: 100px;
+    height: 100px;
+    left: 20%;
+  }
 `;
 
 const WrapFixedBackground = styled.div`
@@ -203,10 +217,12 @@ const Background = styled.div<BackgroundProp>`
   position: absolute;
   top: ${({ $top }) => $top}%;
   left: ${({ $left }) => ($left ? $left : "-3")}%;
+
   background-image: url(${({ src }) => src});
   background-size: ${({ $isContain }) => ($isContain ? "contain" : "cover")};
   background-repeat: no-repeat;
   z-index: 4;
+  overflow: hidden;
 
   ${({ $scale }) =>
     $scale &&
@@ -215,6 +231,17 @@ const Background = styled.div<BackgroundProp>`
       transition: transform 0.1s ease; // 부드러운 애니메이션 추가
     `}
   transition: transform 0.1s ease;
+
+  @media (max-width: 650px) {
+    background-size: contain;
+
+    &.bg-3 {
+      top: ${({ $top }) => ($top ? parseFloat($top) + 10 : 0)}%;
+    }
+    &.bg-4 {
+      top: ${({ $top }) => ($top ? parseFloat($top) + 5 : 0)}%;
+    }
+  }
 `;
 
 Background.defaultProps = {

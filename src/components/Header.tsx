@@ -9,12 +9,13 @@ const Header: React.FC = () => {
         {/* <img src="/assets/logo.svg" alt="로고" /> */}
         {/* <h1>뮤지컬추천</h1> */}
       </WrapLogo>
-      <WrapMenus>
+      {/* <WrapMenus>
         <div>Home</div>
         <div>About</div>
         <div>Work</div>
         <div>Contact</div>
-      </WrapMenus>
+      </WrapMenus> */}
+      <CatchPrase>보고 싶은 뮤지컬 추천받기</CatchPrase>
     </HeaderContainer>
   );
 };
@@ -47,11 +48,25 @@ const WrapLogo = styled.div`
   }
 `;
 
-const WrapMenus = styled.div`
+const CatchPrase = styled.div`
   display: flex;
   gap: 35px;
   padding-top: 10px;
   flex-wrap: wrap;
 
-  font-size: 1.3rem;
+  font-size: 2rem;
+  font-family: Nanum_SonGeurSsi;
+
+  @media (max-width: 650px) {
+    display: none;
+  }
 `;
+
+// const WrapMenus = styled.div`
+//   display: flex;
+//   gap: 35px;
+//   padding-top: 10px;
+//   flex-wrap: wrap;
+
+//   font-size: 1.3rem;
+// `;

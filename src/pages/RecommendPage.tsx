@@ -26,6 +26,7 @@ const RecommendPage = () => {
   const [inputValue, setInputValue] = useState("");
   const [resultList, setResultList] = useState<resultProp[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 650);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
@@ -44,6 +45,15 @@ const RecommendPage = () => {
         setIsLoading(false);
       });
   };
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 650);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   useEffect(() => {
     function typeWriter() {
@@ -130,16 +140,16 @@ const RecommendPage = () => {
               placeholder="웅장한 역사 스토리를 담은 뮤지컬을 추천해줘"
               onChange={handleChange}
             />
-            <button type="submit">
+            <RecommendButton type="submit" $isLoading={isLoading}>
               {isLoading ? (
                 <BeatLoader color="white" size="10px" />
               ) : (
                 <>
                   <img src="/assets/recommend/theater-masks.png" alt="아이콘" />
-                  추천받기
+                  {isMobile ? "추천" : "추천받기"}
                 </>
               )}
-            </button>
+            </RecommendButton>
           </form>
         </Content>
       </WrapContent>
@@ -369,27 +379,35 @@ const Content = styled.div`
 
     &::placeholder {
     }
+
+    @media (max-width: 650px) {
+      width: 60vw;
+    }
+  }
+`;
+
+const RecommendButton = styled.button<{ $isLoading: boolean }>`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.9rem;
+
+  margin-left: 0.5rem;
+  width: 6rem;
+  height: 2.3rem;
+
+  background-color: #9544cf;
+  border: none;
+  color: white;
+  font-weight: 600;
+
+  img {
+    width: 1rem;
+    padding-right: 0.3rem;
   }
 
-  button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 0.9rem;
-
-    margin-left: 0.5rem;
-    width: 6rem;
-    height: 2.3rem;
-
-    background-color: #9544cf;
-    border: none;
-    color: white;
-    font-weight: 600;
-
-    img {
-      width: 1rem;
-      padding-right: 0.3rem;
-    }
+  @media (max-width: 650px) {
+    width: 4rem;
   }
 `;
 
